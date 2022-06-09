@@ -3,6 +3,7 @@ package com.creations.async.exception;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,6 +30,13 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(IllegalArgumentException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorInfo handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+    log.error("Received IllegalArgumentException::{}", ex.getMessage());
+    return new ErrorInfo(new Date(), "Bad Request", ex.getMessage());
+  }
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  @ResponseStatus(HttpStatus.FAILED_DEPENDENCY)
+  public ErrorInfo handleIllegalArgumentException(HttpRequestMethodNotSupportedException ex, WebRequest request) {
     log.error("Received IllegalArgumentException::{}", ex.getMessage());
     return new ErrorInfo(new Date(), "Bad Request", ex.getMessage());
   }

@@ -15,4 +15,13 @@ public class ErrorInfo {
 
   private String message;
   private String description;
+
+  void text() {
+
+  }
+
+  public void test() {
+
+  }
+
 }
